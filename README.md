@@ -8,6 +8,13 @@ Active home lab project.
 
 This stack currently serves as the primary DNS server for my home network. The documentation will evolve as new services are added.
 
+## Stack Components
+
+- Raspberry Pi
+- AdGuard Home
+- Unbound recursive DNS
+- Tailscale secure remote access
+
 ## Overview
 
 This project documents my Raspberry Pi based DNS stack used as the primary DNS service for my home network. It is designed to improve visibility, privacy, and control over network traffic while also serving as a hands-on infrastructure lab.
