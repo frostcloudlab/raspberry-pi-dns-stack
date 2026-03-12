@@ -34,7 +34,7 @@ This project documents my Raspberry Pi based DNS stack used as the primary DNS s
 - [AdGuard Home](docs/adguard.md)
 - [Unbound](docs/unbound.md)
 - [Tailscale](docs/tailscale.md)
-- [DNS Records](docs/dns-records.md)
+- [DNS Configuration](docs/dns-configuration.md)
 - [Future Improvements](docs/future-improvements.md)
 - [Lessons Learned](docs/lessons-learned.md)
 
