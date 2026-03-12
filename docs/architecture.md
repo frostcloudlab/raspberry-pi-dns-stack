@@ -1,99 +1,67 @@
-# DNS Infrastructure Architecture
+# Architecture
 
-This project implements a layered DNS architecture similar to those used in enterprise environments.
+This project runs a lightweight DNS infrastructure stack on a Raspberry Pi that serves as the primary DNS server for the home network.
 
----
+The stack provides DNS filtering, recursive resolution, and secure remote administration.
 
-# High Level Design
+## Core Components
 
-User Device  
-→ DNS Filter Layer  
-→ Recursive Resolver Layer  
-→ Internet Root DNS
+### Raspberry Pi
 
----
+The Raspberry Pi hosts the DNS services for the network. It runs multiple services that work together to process DNS queries and provide secure management access.
 
-# DNS Resolution Flow
+Services running on the Pi:
 
-Step 1
+- AdGuard Home
+- Unbound
+- Tailscale
 
-A device sends a DNS request to the network DNS server.
+### AdGuard Home
 
-Example:
+AdGuard Home is the primary DNS interface for the network.
 
-```
-example.com
-```
+Responsibilities:
 
----
+- Network-wide DNS filtering
+- Query logging and visibility
+- DNS request handling for client devices
+- Forwarding upstream queries to Unbound
 
-Step 2
+All DNS requests from client devices are first processed by AdGuard.
 
-AdGuard receives the query.
+### Unbound
 
-AdGuard checks:
+Unbound provides recursive DNS resolution.
 
-- blocklists
-- custom DNS rules
-- local DNS records
+Instead of forwarding requests to public DNS providers, Unbound resolves domains directly from the DNS root servers.
 
-If the domain is blocked, the request stops here.
+Benefits include:
 
----
+- Improved privacy
+- Reduced reliance on third-party DNS providers
+- More control over DNS resolution
 
-Step 3
+### Tailscale
 
-If the domain is allowed, AdGuard forwards the request to Unbound.
+Tailscale provides secure remote access to the Raspberry Pi and other devices in the lab.
 
----
+The Raspberry Pi joins a private tailnet alongside trusted devices such as laptops and phones.
 
-Step 4
+This allows:
 
-Unbound performs recursive DNS resolution.
+- Remote administration of the Pi
+- Access to the AdGuard dashboard
+- Secure SSH access
 
-It queries the DNS hierarchy:
+No services are exposed directly to the public internet.
 
-```
-Root Servers
-→ TLD Servers
-→ Authoritative Servers
-```
+## DNS Resolution Flow
 
----
+DNS queries follow this path:
 
-Step 5
-
-The result is returned to AdGuard and then to the client.
-
----
-
-# Remote Access Architecture
-
-Remote devices connect using Tailscale.
-
-This creates a secure private network between devices.
-
-Remote Device  
-→ Tailscale  
-→ Raspberry Pi  
-→ Home LAN
-
-The Raspberry Pi advertises the subnet route:
-
-```
-192.168.0.0/24
-```
-
-This allows tailnet devices to access internal systems.
-
----
-
-# Why This Architecture
-
-Advantages:
-
-- DNS privacy
-- improved performance via caching
-- centralized filtering
-- secure remote access
-- scalable internal DNS structure
+1. Client device sends DNS request
+2. Request reaches AdGuard Home on the Raspberry Pi
+3. AdGuard applies filtering and logging
+4. AdGuard forwards the query to Unbound
+5. Unbound performs recursive resolution
+6. Response returns to the client device
