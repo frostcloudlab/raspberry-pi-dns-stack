@@ -8,6 +8,10 @@ Active home lab project.
 
 This stack currently serves as the primary DNS server for my home network. The documentation will evolve as new services are added.
 
+## Architecture
+
+![Network Diagram](images/network-diagram.png)
+
 ## Stack Components
 
 - Raspberry Pi
