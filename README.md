@@ -1,174 +1,48 @@
-# Private Recursive DNS Infrastructure
+# Raspberry Pi DNS Stack
 
-This project documents the design and deployment of a private DNS infrastructure built for my homelab.
+Self-hosted DNS and network services stack built on Raspberry Pi for home lab infrastructure.
 
-The system provides:
+## Project Status
 
-- Network-wide ad blocking
-- Private recursive DNS resolution
-- Internal DNS namespace
-- Secure remote access to the home network
-- Subnet routing via a private VPN
+Active home lab project.
 
-The infrastructure runs on a Raspberry Pi and mirrors many patterns used in production environments.
+This stack currently serves as the primary DNS server for my home network. The documentation will evolve as new services are added.
 
----
+## Overview
 
-# Goals
+This project documents my Raspberry Pi based DNS stack used as the primary DNS service for my home network. It is designed to improve visibility, privacy, and control over network traffic while also serving as a hands-on infrastructure lab.
 
-The project was designed to accomplish several goals:
+## Core Components
 
-- Learn DNS infrastructure and recursive resolution
-- Remove reliance on third-party DNS providers
-- Provide ad and tracker blocking for all devices
-- Build a secure remote access solution
-- Create an internal DNS namespace for future services
+- AdGuard Home for network-wide DNS filtering
+- Unbound for recursive DNS resolution
+- Tailscale for secure remote access
+- Raspberry Pi as the host platform
 
----
+## Project Goals
 
-# System Architecture
+- Route home network DNS through the Pi
+- Improve privacy and visibility
+- Build practical Linux and networking experience
+- Document the stack like a real infrastructure project
 
-Client Device  
-→ AdGuard DNS Filter  
-→ Unbound Recursive Resolver  
-→ Root DNS Servers
+## Documentation
 
-Remote devices access the network through Tailscale.
+- [Overview](docs/overview.md)
+- [Architecture](docs/architecture.md)
+- [Network Overview](docs/network-overview.md)
+- [Hardware](docs/hardware.md)
+- [AdGuard Home](docs/adguard.md)
+- [Unbound](docs/unbound.md)
+- [Tailscale](docs/tailscale.md)
+- [DNS Records](docs/dns-records.md)
+- [Future Improvements](docs/future-improvements.md)
+- [Lessons Learned](docs/lessons-learned.md)
 
-Remote Device  
-→ Tailscale VPN  
-→ Raspberry Pi  
-→ Home LAN
+## Diagram
 
----
+- [Network Diagram Notes](diagrams/network-diagram.md)
 
-# Key Components
+## Future Plans
 
-## Raspberry Pi 4
-
-Acts as the infrastructure node for the lab.
-
-Responsibilities:
-
-- DNS server
-- ad blocking
-- recursive DNS resolution
-- internal DNS authority
-- VPN access point
-- subnet router
-
----
-
-## AdGuard Home
-
-AdGuard Home acts as the primary DNS server for the network.
-
-Responsibilities:
-
-- DNS filtering
-- ad and tracker blocking
-- malware domain blocking
-- custom DNS records
-- web-based management dashboard
-
----
-
-## Unbound
-
-Unbound provides recursive DNS resolution.
-
-Instead of forwarding requests to public DNS providers such as Google or Cloudflare, Unbound queries root DNS servers directly.
-
-Advantages:
-
-- improved privacy
-- no third-party DNS dependency
-- local caching
-- faster repeated queries
-
----
-
-## Tailscale
-
-Tailscale provides secure remote access to the network.
-
-Features used:
-
-- encrypted VPN connectivity
-- subnet routing
-- remote SSH access
-- access to internal services without port forwarding
-
----
-
-# Internal DNS Namespace
-
-The lab uses an internal DNS namespace:
-
-```
-lab.frost.vip
-```
-
-Example records:
-
-```
-dns.lab.frost.vip
-router.lab.frost.vip
-compute.lab.frost.vip
-```
-
-This allows services to be addressed by name instead of IP.
-
----
-
-# Network Layout
-
-LAN network:
-
-```
-192.168.0.0/24
-```
-
-Key hosts:
-
-```
-192.168.0.1   Router
-192.168.0.179 Raspberry Pi DNS server
-```
-
----
-
-# Ports Used
-
-```
-53    DNS (AdGuard)
-5335  Unbound recursive resolver
-80    AdGuard web interface
-22    SSH
-```
-
----
-
-# Privacy Benefits
-
-This architecture improves privacy compared to standard home networks.
-
-Advantages:
-
-- DNS queries resolved locally
-- no dependency on Google or Cloudflare DNS
-- network-wide ad blocking
-- encrypted remote access
-
----
-
-# Future Improvements
-
-Planned improvements include:
-
-- dedicated compute server
-- containerized services
-- reverse proxy with automatic TLS
-- monitoring stack
-- infrastructure automation
-- central security monitoring platform (SIEM)
+Planned improvements include Wazuh, NAS-based storage, expanded monitoring, and continued integration with my broader Frost Cloud Lab environment.
