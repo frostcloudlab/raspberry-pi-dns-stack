@@ -28,7 +28,6 @@ This project documents my Raspberry Pi based DNS stack used as the primary DNS s
 
 ## Documentation
 
-- [Overview](docs/overview.md)
 - [Architecture](docs/architecture.md)
 - [Network Overview](docs/network-overview.md)
 - [Hardware](docs/hardware.md)
