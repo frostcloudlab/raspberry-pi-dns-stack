@@ -10,7 +10,7 @@ This stack currently serves as the primary DNS server for my home network. The d
 
 ## Architecture
 
-![Network Diagram](images/network-diagramv2.png)
+![Network Diagram](images/network-diagramv3.png)
 
 ## Stack Components
 
